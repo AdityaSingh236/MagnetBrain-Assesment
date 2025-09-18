@@ -40,9 +40,7 @@ export default function SignupPage() {
       });
 
       
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 500); 
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message || "Signup failed");
     }

@@ -31,7 +31,7 @@ export default function LoginPage() {
       draggable: true,
       progress: undefined,
     });
-      setTimeout(() => navigate("/dashboard"), 500);
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message || "Invalid credentials");
     }
