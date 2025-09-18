@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
+  baseURL: process.env.REACT_APP_API_URL || "https://magnetbrain-assesment.onrender.com",
 });
 
 
@@ -13,7 +13,7 @@ API.interceptors.request.use((config) => {
 
 export const registerUser = async (name, email, password) => {
   try {
-    const res = await API.post("/auth/register", { name, email, password });
+    const res = await API.post("/api/auth/register", { name, email, password });
     // Response: { token, user: { id, name, email } }
     return res.data;
   } catch (err) {
@@ -25,7 +25,7 @@ export const registerUser = async (name, email, password) => {
 
 export const loginUser = async (email, password) => {
   try {
-    const res = await API.post("/auth/login", { email, password });
+    const res = await API.post("/api/auth/login", { email, password });
     // Response: { token, user: { id, name, email } }
     return res.data;
   } catch (err) {
@@ -36,7 +36,7 @@ export const loginUser = async (email, password) => {
 export const createTask = async (taskData) => {
   try {
     // Token already attached by interceptor
-    const res = await API.post("/tasks", taskData);
+    const res = await API.post("/api/tasks", taskData);
     return res.data; // backend se task ka data milega
   } catch (err) {
     console.error("Error creating task:", err.response?.data?.message || err.message);
@@ -46,10 +46,10 @@ export const createTask = async (taskData) => {
 
 export const fetchTasks = async (page = 1, limit = 5) => {
   try {
-    const res = await API.get("/tasks", {
-      params: { page, limit }, // query parameters
+    const res = await API.get("/api/tasks", {
+      params: { page, limit }, 
     });
-    return res.data; // { tasks: [...], total: number }
+    return res.data; 
   } catch (err) {
     console.error("Error fetching tasks:", err.response?.data?.message || err.message);
     throw new Error(err.response?.data?.message || "Failed to fetch tasks");
@@ -58,8 +58,8 @@ export const fetchTasks = async (page = 1, limit = 5) => {
 
 export const fetchTask = async (id) => {
   try {
-    const res = await API.get(`/tasks/${id}`);
-    return res.data; // single task object
+    const res = await API.get(`/api/tasks/${id}`);
+    return res.data;
   } catch (err) {
     console.error("Error fetching task:", err.response?.data?.message || err.message);
     throw new Error(err.response?.data?.message || "Failed to fetch task");
@@ -68,7 +68,7 @@ export const fetchTask = async (id) => {
 
 export const updateTask = async (id, taskData) => {
   try {
-    const res = await API.put(`/tasks/${id}`, taskData);
+    const res = await API.put(`/api/tasks/${id}`, taskData);
     return res.data; // updated task object
   } catch (err) {
     console.error("Error updating task:", err.response?.data?.message || err.message);
@@ -78,7 +78,7 @@ export const updateTask = async (id, taskData) => {
 
 export const deleteTask = async (id) => {
   try {
-    const res = await API.delete(`/tasks/${id}`);
+    const res = await API.delete(`/api/tasks/${id}`);
     return res.data; // { message: "Task deleted" }
   } catch (err) {
     console.error("Error deleting task:", err.response?.data?.message || err.message);
